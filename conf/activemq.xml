@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Configuração feita dentro da pasta conf/activemq.xml na pasta do activeMQ -->
+<broker>
+	<plugins>
+	        <simpleAuthenticationPlugin anonymousAccessAllowed="false">
+		    <users>
+			    <authenticationUser username="admin" password="admin" groups="users,admins"/>
+			    <authenticationUser username="user" password="senha" groups="users"/>
+			    <authenticationUser username="guest" password="senha" groups="guests"/>
+		    </users>
+	     </simpleAuthenticationPlugin>
+
+         <authorizationPlugin>
+            <map>
+                <authorizationMap>
+                    <authorizationEntries>
+                        <authorizationEntry queue="fila.financeiro" read="users" write="admins" admin="admins" />
+                        <authorizationEntry topic="comercial" read="users" write="admins" admin="admins" />
+                        <authorizationEntry topic="ActiveMQ.Advisory.>" read="users,admins" write="users,admins" admin="users,admins"/>
+                    </authorizationEntries>
+                    <tempDestinationAuthorizationEntry>
+                        <tempDestinationAuthorizationEntry read="admin" write="admin" admin="admin"/>
+                    </tempDestinationAuthorizationEntry>
+                </authorizationMap>
+            </map>
+        </authorizationPlugin>
+	    </plugins>
+</broker>

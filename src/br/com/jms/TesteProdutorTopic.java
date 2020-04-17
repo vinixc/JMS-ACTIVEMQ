@@ -18,7 +18,7 @@ public class TesteProdutorTopic {
 		InitialContext context = new InitialContext(PropertiesProducerJndi.geraPropertiesMOMTopic());
 		
 		ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
-		Connection connection = factory.createConnection();
+		Connection connection = factory.createConnection("admin","admin");
 		connection.start();
 		
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);//boolean sem transação

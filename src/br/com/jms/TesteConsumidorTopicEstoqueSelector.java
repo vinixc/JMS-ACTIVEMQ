@@ -23,7 +23,7 @@ public class TesteConsumidorTopicEstoqueSelector {
 		InitialContext context = new InitialContext(PropertiesProducerJndi.geraPropertiesMOMTopic());
 		
 		ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
-		Connection connection = factory.createConnection();
+		Connection connection = factory.createConnection("user","senha");
 		connection.setClientID("estoque");
 		connection.start();
 		
