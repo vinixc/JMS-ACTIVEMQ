@@ -1,26 +1,25 @@
 package br.com.jms;
 
+import java.util.Enumeration;
 import java.util.Scanner;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
+import javax.jms.Queue;
+import javax.jms.QueueBrowser;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 
 import br.com.jms.util.PropertiesProducerJndi;
 
-public class TesteConsumidor {
+public class TesteConsumidorFilaSemRetirarFIla {
 	
-	@SuppressWarnings("resource")
+	@SuppressWarnings({ "resource", "rawtypes" })
 	public static void main(String[] args) throws Exception {
 		
-		InitialContext context = new InitialContext(PropertiesProducerJndi.geraPropertiesMOM());
+		InitialContext context = new InitialContext(PropertiesProducerJndi.geraPropertiesMOMFila());
 		
 		ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
 		Connection connection = factory.createConnection();
@@ -29,23 +28,16 @@ public class TesteConsumidor {
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);//boolean sem transação
 		Destination fila = (Destination) context.lookup("financeiro");
 		
-		MessageConsumer consumer = session.createConsumer(fila);
+		QueueBrowser browser = session.createBrowser((Queue) fila);
 		
-		consumer.setMessageListener(new MessageListener() {
+		Enumeration msgs = browser.getEnumeration();
+		
+		while(msgs.hasMoreElements()) {
+			TextMessage msg = (TextMessage) msgs.nextElement();
 			
-			@Override
-			public void onMessage(Message message) {
-				
-				TextMessage textMessage = (TextMessage) message;
-				
-				try {
-					System.out.println(textMessage.getText());
-				
-				} catch (JMSException e) {
-					e.printStackTrace();
-				}
-			}
-		});
+			System.out.println("Message: " + msg.getText());
+		}
+		
 		
 		new Scanner(System.in).hasNextLine();
 		

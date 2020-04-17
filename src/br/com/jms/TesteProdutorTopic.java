@@ -10,27 +10,25 @@ import javax.naming.InitialContext;
 
 import br.com.jms.util.PropertiesProducerJndi;
 
-public class TesteProdutor {
+public class TesteProdutorTopic {
 	
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws Exception {
 		
-		InitialContext context = new InitialContext(PropertiesProducerJndi.geraPropertiesMOM());
+		InitialContext context = new InitialContext(PropertiesProducerJndi.geraPropertiesMOMTopic());
 		
 		ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
 		Connection connection = factory.createConnection();
 		connection.start();
 		
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);//boolean sem transação
-		Destination fila = (Destination) context.lookup("financeiro");
+		Destination topic = (Destination) context.lookup("loja");
 		
-		MessageProducer producer = session.createProducer(fila);
+		MessageProducer producer = session.createProducer(topic);
 		
 		
-		for(int i = 0;i <1000;i++) {
-			Message message = session.createTextMessage("<pedido><id>"+i+"</id></pedido>");
-			producer.send(message);
-		}
+		Message message = session.createTextMessage("<pedido><id>"+123+"</id></pedido>");
+		producer.send(message);
 		
 		
 //		new Scanner(System.in).hasNextLine();
