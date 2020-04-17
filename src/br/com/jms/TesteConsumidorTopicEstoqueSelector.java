@@ -15,7 +15,7 @@ import javax.naming.InitialContext;
 
 import br.com.jms.util.PropertiesProducerJndi;
 
-public class TesteConsumidorTopic {
+public class TesteConsumidorTopicEstoqueSelector {
 	
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws Exception {
@@ -30,7 +30,8 @@ public class TesteConsumidorTopic {
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);//boolean sem transação
 		Topic topic = (Topic) context.lookup("loja");
 		
-		MessageConsumer consumer = session.createDurableSubscriber(topic, "assinatura");
+		MessageConsumer consumer = session.createDurableSubscriber(
+				topic, "assinatura-selector", "ebook is null OR ebook=false", false);
 		
 		consumer.setMessageListener(new MessageListener() {
 			
