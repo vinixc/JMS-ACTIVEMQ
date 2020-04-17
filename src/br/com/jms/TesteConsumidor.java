@@ -13,12 +13,14 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 
+import br.com.jms.util.PropertiesProducerJndi;
+
 public class TesteConsumidor {
 	
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws Exception {
 		
-		InitialContext context = new InitialContext();
+		InitialContext context = new InitialContext(PropertiesProducerJndi.geraPropertiesMOM());
 		
 		ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
 		Connection connection = factory.createConnection();
