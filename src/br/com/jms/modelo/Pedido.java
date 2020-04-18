@@ -1,12 +1,15 @@
 package br.com.jms.modelo;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.xml.bind.JAXB;
 //JAX-B
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -95,6 +98,16 @@ public class Pedido implements Serializable{
 				+ ", valorTotal=" + valorTotal + ", itens=" + itens + "]";
 	}
 
-	
-	
+	public String toXML() {
+		try {
+			StringWriter writer = new StringWriter();
+			JAXB.marshal(this, writer);
+			String xml = writer.toString();
+			writer.close();
+			return xml;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

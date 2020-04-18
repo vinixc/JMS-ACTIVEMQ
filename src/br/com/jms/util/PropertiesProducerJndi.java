@@ -19,6 +19,17 @@ public class PropertiesProducerJndi {
 		return properties;
 	}
 	
+	public static Properties geraPropertiesMOMFilaDLQ() {
+		
+		Properties properties = new Properties();
+		properties.setProperty("java.naming.factory.initial", "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
+		
+		properties.setProperty("java.naming.provider.url", "tcp://localhost:61616");
+		properties.setProperty("queue.dlq", "ActiveMQ.DLQ");
+		
+		return properties;
+	}
+	
 	public static Properties geraPropertiesMOMTopic() {
 		
 		Properties properties = new Properties();

@@ -18,7 +18,7 @@ public class TesteProdutorFila {
 		InitialContext context = new InitialContext(PropertiesProducerJndi.geraPropertiesMOMFila());
 		
 		ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
-		Connection connection = factory.createConnection();
+		Connection connection = factory.createConnection("admin","admin");
 		connection.start();
 		
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);//boolean sem transação
@@ -27,10 +27,10 @@ public class TesteProdutorFila {
 		MessageProducer producer = session.createProducer(fila);
 		
 		
-		for(int i = 0;i <1000;i++) {
-			Message message = session.createTextMessage("<pedido><id>"+i+"</id></pedido>");
+//		for(int i = 0;i <1000;i++) {
+			Message message = session.createTextMessage("<pedido><id>"+12+"</id></pedido>");
 			producer.send(message);
-		}
+//		}
 		
 		
 //		new Scanner(System.in).hasNextLine();

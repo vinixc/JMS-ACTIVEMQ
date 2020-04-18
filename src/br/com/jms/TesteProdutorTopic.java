@@ -16,7 +16,8 @@ public class TesteProdutorTopic {
 	
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws Exception {
-		
+		System.setProperty("org.apache.activemq.SERIALIZABLE_PACKAGES","*");
+
 		InitialContext context = new InitialContext(PropertiesProducerJndi.geraPropertiesMOMTopic());
 		
 		ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
