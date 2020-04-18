@@ -8,6 +8,8 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.naming.InitialContext;
 
+import br.com.jms.modelo.Pedido;
+import br.com.jms.modelo.PedidoFactory;
 import br.com.jms.util.PropertiesProducerJndi;
 
 public class TesteProdutorTopic {
@@ -26,11 +28,16 @@ public class TesteProdutorTopic {
 		
 		MessageProducer producer = session.createProducer(topic);
 		
-		
-		Message message = session.createTextMessage("<pedido><id>"+123+"</id><ebook>false</ebook></pedido>");
+		Pedido pedido = new PedidoFactory().geraPedidoComValores();
+//		
+//		StringWriter writer = new StringWriter();
+//		JAXB.marshal(pedido, writer);
+//		
+//		String xml = writer.toString();
+		System.out.println(pedido);
+		Message message = session.createObjectMessage(pedido);
 		message.setBooleanProperty("ebook", false);
 		producer.send(message);
-		
 		
 //		new Scanner(System.in).hasNextLine();
 		

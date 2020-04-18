@@ -8,11 +8,12 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
+import javax.jms.ObjectMessage;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 import javax.jms.Topic;
 import javax.naming.InitialContext;
 
+import br.com.jms.modelo.Pedido;
 import br.com.jms.util.PropertiesProducerJndi;
 
 public class TesteConsumidorTopicEstoqueSelector {
@@ -38,10 +39,11 @@ public class TesteConsumidorTopicEstoqueSelector {
 			@Override
 			public void onMessage(Message message) {
 				
-				TextMessage textMessage = (TextMessage) message;
+				ObjectMessage objMessage = (ObjectMessage) message;
 				
 				try {
-					System.out.println(textMessage.getText());
+					Pedido pedido = (Pedido) objMessage.getObject();
+					System.out.println(pedido);
 				
 				} catch (JMSException e) {
 					e.printStackTrace();
