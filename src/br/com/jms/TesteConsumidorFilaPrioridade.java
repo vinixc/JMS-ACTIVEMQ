@@ -15,12 +15,12 @@ import javax.naming.InitialContext;
 
 import br.com.jms.util.PropertiesProducerJndi;
 
-public class TesteConsumidorFila {
+public class TesteConsumidorFilaPrioridade {
 	
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws Exception {
 		
-		InitialContext context = new InitialContext(PropertiesProducerJndi.geraPropertiesMOMFila());
+		InitialContext context = new InitialContext(PropertiesProducerJndi.geraPropertiesMOMFilaLog());
 		
 		ConnectionFactory factory = (ConnectionFactory) context.lookup("ConnectionFactory");
 		Connection connection = factory.createConnection("user","senha");
@@ -42,7 +42,14 @@ public class TesteConsumidorFila {
 				
 				TextMessage textMessage = (TextMessage) message;
 					
-				System.out.println(textMessage.getText());
+					/**
+					 * (Session.CLIENT_ACKNOWLEDGE)
+					 * UTILIZANDO CLIENT ACKNOWLEDGE PRECISAMOS CONFIRMAR
+					 * O RECEBIMENTO DA MENSAGEM.
+					 */
+					//message.acknowledge();
+				
+					System.out.println(textMessage.getText());
 				
 				} catch (JMSException e) {
 					e.printStackTrace();

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Configuração feita dentro da pasta conf/activemq.xml na pasta do activeMQ -->
+<!-- Configuração feita dentro da pasta conf/activemq.xml na pasta do activeMQ
+
+<policyEntry queue=">" prioritizedMessages="true"/>
+
+ -->
 <broker>
 	<plugins>
 	        <simpleAuthenticationPlugin anonymousAccessAllowed="false">

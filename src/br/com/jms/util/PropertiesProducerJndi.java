@@ -18,6 +18,16 @@ public class PropertiesProducerJndi {
 		
 		return properties;
 	}
+	public static Properties geraPropertiesMOMFilaLog() {
+		
+		Properties properties = new Properties();
+		properties.setProperty("java.naming.factory.initial", "org.apache.activemq.jndi.ActiveMQInitialContextFactory");
+		
+		properties.setProperty("java.naming.provider.url", "tcp://localhost:61616");
+		properties.setProperty("queue.log", "fila.log");
+		
+		return properties;
+	}
 	
 	public static Properties geraPropertiesMOMFilaDLQ() {
 		
